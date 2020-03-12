@@ -1,0 +1,146 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Hope</title>
+    
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css" type="text/css">
+    <!-- Custom fonts for this template -->
+    
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+  
+<link rel="stylesheet" href="css/landing-page.min.css" type="text/css">
+
+    <!-- Bootstrap core CSS -->
+   <script type="text/javascript">
+
+    $('.custom-file input').change(function (e) {
+        if (e.target.files.length) {
+            $(this).next('.custom-file-label').html(e.target.files[0].name);
+        }
+    });
+
+</script>
+
+</head>
+    <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow p-3 mb-5 bg-white rounded">
+
+      <i class="fa fa-diagnoses fa-2x" style="color: #409bac"></i> 
+    <a class="navbar-brand" href="/" style="color: #409bac; font-weight: 600">Hope  <span style="color: rgba(0, 0, 0, 0.7); font-weight: 300;"> Early Detection Starts With You</span></a> 
+   
+     <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="margin-left: 10rem;">
+      <li class="nav-item active">
+        <a class="nav-link" href="#"> Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+
+    </ul>
+    <div class="form-inline ml-auto my-2 my-lg-0">
+     <span style="margin-right: 10px; color: #409bac">Are you a specialist? </span> 
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login here</button>
+    </div>
+  
+</nav>
+
+<body style="overflow-y: auto !important ;
+    background: url(../static/img/assess.jpg); background-repeat: no-repeat;
+  background-size: cover; background-color: white">
+
+    <!-- Navigation -->
+<div>
+  <div class="row" style="margin-top: 2rem;">
+    <div class="col-lg-12 col-sm-12">
+       <div class="row h-100 justify-content-center align-items-center">
+<div class="card border-light mb-3 shadow-lg" style="width: 50rem;">
+  <div class="card-header">Add a New Question</div>
+  <div class="card-body">
+       <form class="form-example" action="" method="post">
+                
+                <!-- Input fields -->
+                <div class="form-group">
+                    <label class="text-info" for="username"> Question </label>
+                    <input class="form-control" type="text" id="question" name="question" placeholder="Is the color of the spot not the same all over?">
+                </div>
+                <div class="form-group">
+                    <label class="text-info" for="firstname">Subtext </label>
+                    <textarea type="text" class="form-control" id="firstname" name="subtext" placeholder="The color is not the same all over and may include shades of brown or black, sometimes with patches of pink, red, white, or blue."></textarea>
+                </div>
+                 <div class="form-group">
+                     <label class="text-info" for="symptom" style="margin-right: 1rem;"> Symptom of </label>
+                     <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+  <label class="form-check-label" for="inlineCheckbox1">Squamous Cell Carcinoma</label>
+</div>
+<div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+  <label class="form-check-label" for="inlineCheckbox2">Basal Cell Carcinoma</label>
+</div>
+                     <div class="form-check form-check-inline">
+  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+  <label class="form-check-label" for="inlineCheckbox3">Merkel Cell Carcinoma</label>
+</div>
+                  </div>  
+                     <form class="form" action="" method="post">
+                          <span class="text-info">  Upload a reference image so patients know what to look for (.jpg, .png, .jpeg) </span> 
+<div class="custom-file">
+  <input type="file" class="custom-file-input" id="customFile">
+  <label class="custom-file-label" for="customFile">Choose file</label>
+</div>
+              
+
+          </form>
+
+                
+              <!--<button type="submit" class="btn btn-info btn-default">Add patient</button>-->
+             
+            </form>
+        <div class="d-flex justify-content-end">
+              <button class="btn btn-outline-info" style="margin: 5px;"> Cancel
+        </button>
+   <button class="btn btn-info" style="margin: 5px;"> Add Question
+        </button>
+  
+</div>
+      
+            
+       
+    
+                
+               
+              
+
+             
+       
+
+      
+    
+
+  </div>
+    
+</div>
+        
+</div>
+    </div>
+  </div>
+</div>
+
+      
+
+</body>
+
+    <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.js"></script>
+
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</html>

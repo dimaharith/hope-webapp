@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>{% block title %}{% endblock %} - Hope </title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/fontawesome-free/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/simple-line-icons/css/simple-line-icons.css') }}" type="text/css">
+    <!-- Custom fonts for this template -->
+    
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+  
+<link rel="stylesheet" href="{{ url_for('static', filename='css/landing-page.min.css') }}" type="text/css">
+
+      <script type="text/javascript">
+
+    $('.custom-file input').change(function (e) {
+        if (e.target.files.length) {
+            $(this).next('.custom-file-label').html(e.target.files[0].name);
+        }
+    });
+
+</script>
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light ">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <i class="fa fa-diagnoses fa-2x" style="color: #409bac"></i> 
+    <a class="navbar-brand" href="/" style="color: #409bac; font-weight: 600">Hope  <span style="color: rgba(0, 0, 0, 0.7); font-weight: 300;"> Early Detection Starts With You</span></a> 
+   
+     <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="margin-left: 10rem;">
+      <li class="nav-item active">
+        <a class="nav-link" href="/index"> Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+
+    </ul>
+    {% if pageType == 'login' %}
+    {% elif not(pageType == 'questions' or pageType == 'dashboard' or pageType == 'addquestion') %}
+      
+          <div class="form-inline ml-auto my-2 my-lg-0">
+     <span style="margin-right: 10px; color: #409bac">Are you a specialist? </span> 
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login here</button>
+    </div>
+ {% else %}
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Log out</button>
+  {% endif %}
+  </div>
+</nav>
+
+
+</body>
+{% block body%}
+{% endblock %}
+
+    <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+</html>

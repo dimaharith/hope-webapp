@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Review Questions{% endblock %}
+{% block body%}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: rgba(90, 175, 172, 0.7) !important;">
+  <a class="navbar-brand" href="#">Dashboard</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('dashboard') }}">Assessment History</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Questions</a>
+      </li>
+
+    </ul>
+      <button type="button" class="btn btn-info ml-auto" style="margin-right: 1rem;">Add a new question</button>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+<body style="overflow-y: auto !important ;
+    background: url(../static/img/assess.jpg); background-repeat: no-repeat;
+  background-size: cover; background-color: white">
+
+    <!-- Navigation -->
+<div>
+</div>
+<div>
+  <div class="row" style="margin-top: 3rem;">
+    <div class="col-lg-12 col-sm-12">
+       <div class="row h-100 justify-content-center align-items-center">
+              <div class="card" style="width: 90%; ">
+  <div class="card-body">
+    <h5 class="card-title">Questions</h5>
+ <table class="table" style="table-layout: fixed;  vertical-align: middle !important; ">
+  <thead class="thead-light">
+    <tr>
+      <th scope="col" style="width: 40px;">#</th>
+        <th scope="col">Question</th>
+      <th scope="col">Subtext</th>
+      <th scope="col">Symptom of</th>
+        <th scope="col">Reference Image</th>
+        <th scope="col">Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td scope="row">1</td>
+        <td>Is the color of the spot not the same all over?</td>
+      <td >The color is not the same all over and may include shades of brown or black, sometimes with patches of pink, red, white, or blue.</td>
+      <td>Basal Cell Carcinoma</td>
+        <td>      <div class="col-6">
+          <img src="../static/img/spot.jpg" class="img-fluid" >
+          </div></td>
+        <td><button type="button" class="btn btn-outline-danger ml-auto" style="margin-right: 1rem;">Delete</button>
+                                <button type="button" class="btn btn-outline-info ml-auto" style="margin-right: 1rem;">Edit</button></td>
+    </tr>
+
+  </tbody>
+</table>
+              </div>
+            </div>
+        
+</div>
+    </div>
+  </div>
+</div>
+
+      
+
+</body>
+{% endblock %}

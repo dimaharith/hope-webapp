@@ -1,0 +1,77 @@
+{% extends "template.html" %}
+
+{% block body %}
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-dark bg-dark static-top" style="background-color: #416469 !important; ">
+        <div class="mr-auto">
+        <a href="dashboard.html"><i class="fa fa-chevron-left" style="font-size: 20px;color:white;"></i></a> <span style="font-size: 20px; color: white; padding-left: 10px;"> Add a Patient </span>
+        </div>
+    </nav>
+   
+  
+<div class="container h-100" style="padding-top: 3%">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-10 col-md-8 col-lg-6">
+            <!-- Form -->
+            <form class="form-example" action="" method="post">
+                
+                <!-- Input fields -->
+                <div class="form-group">
+                    <label for="username"> ID </label>
+                    <input class="form-control" type="text" placeholder="1" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="firstname">First name </label>
+                    <input type="text" class="form-control" id="firstname" placeholder="First name" name="firstname">
+                </div>
+
+                <div class="form-group">
+                    <label for="lastname">Last name </label>
+                    <input type="text" class="form-control" id="lastname" placeholder="Last name" name="lastname">
+                </div>
+                 <div class="form-group">
+                    <label for="datepicker">Date of birth </label>
+                 <input id="datepicker" width="276" />
+                </div>
+                <script>
+                        $('#datepicker').datepicker({
+                            uiLibrary: 'bootstrap4'
+                        });
+                 </script>
+                <div class="form-group">
+                     <label for="datepicker"> Gender </label>
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline1" name="customRadioInline1" class="custom-control-input"  checked="">
+                  <label class="custom-control-label" for="customRadioInline1"  style="padding-left: 20px !important;">Female</label>
+                </div>
+                    
+                <div class="custom-control custom-radio custom-control-inline">
+                  <input type="radio" id="customRadioInline2" name="customRadioInline1" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadioInline2" style="padding-left: 20px !important;"> Male</label>
+                </div>
+                    </div>
+                 <div class="form-group">
+                     <label for="ortho"> Type of orthodontic appliance </label>
+                <select class="custom-select">
+              <option selected>No orthodontic appliance</option>
+              <option value="1">Fixed appliance</option>
+              <option value="2">Clear aligners (i.e. Invisalign)</option>
+            </select>
+                  </div>     
+               <div class="col text-center">
+                 <button type="submit" class="btn btn-info btn-default" style="width:50%">Add patient</button>
+        
+                </div>
+                
+              <!--<button type="submit" class="btn btn-info btn-default">Add patient</button>-->
+             
+            </form>
+            <!-- Form end -->
+    </div>
+</div>
+    
+    
+    </div>
+</body>
+{% endblock %}

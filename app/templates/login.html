@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}Login as a specialist{% endblock %}
+{% block body%}
+
+<body style="overflow-y: hidden !important ;
+    background: url(../static/img/patientdoctor.png); background-repeat: no-repeat;
+  background-size: cover;">
+
+    <!-- Navigation -->
+<div>
+  <div class="row h-100">
+    <div class="col-8">
+     
+    </div>
+    <div class="col-4">
+       <div class="row h-100 justify-content-center align-items-center" style="margin-top: 7rem;">
+              <div class="card" style="width: 20rem;">
+  <div class="card-body">
+    <h5 class="card-title">Login as a specialist</h5>
+    <h6 class="card-subtitle mb-2 text-muted"></h6>
+    <p class="card-text" style="line-height: 20px;">As a specialist, you may contribute to our system's database by adding and modifying disease definitions</p>
+      <form class="form-example" action="" method="post">
+                <!-- Input fields -->
+                <div class="form-group">
+                    <label for="username"> E-mail address </label>
+                    <input class="form-control" type="text" placeholder="janedoe@email.com">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password </label>
+                    <input type="password" class="form-control" id="password" placeholder="" name="password">
+                </div>    
+               <div class="col text-center">
+                 <button type="submit" class="btn btn-info btn-default">Login</button>
+        
+                </div>
+                
+              <!--<button type="submit" class="btn btn-info btn-default">Add patient</button>-->
+             
+            </form>
+              </div>
+            </div>
+        
+</div>
+    </div>
+  </div>
+</div>
+
+      
+
+</body>
+
+
+
+{% endblock %}
