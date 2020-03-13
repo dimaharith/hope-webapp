@@ -17,7 +17,7 @@
       </li>
 
     </ul>
-      <button type="button" class="btn btn-info ml-auto" style="margin-right: 1rem;">Add a new question</button>
+      <button type="button" class="btn btn-info ml-auto" style="margin-right: 1rem;" onclick="location.href = '{{ url_for('addquestion')}}';">Add a new question</button>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
@@ -50,19 +50,33 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td scope="row">1</td>
-        <td>Is the color of the spot not the same all over?</td>
-      <td >The color is not the same all over and may include shades of brown or black, sometimes with patches of pink, red, white, or blue.</td>
-      <td>Basal Cell Carcinoma</td>
+   {% for question in questions %}
+   <form id="form" action="{{url_for('questions', action='delete', question=question['question'])}}" method="POST">
+   <tr>
+      <td scope="row">{{ loop.index }}</td>
+        <td>{{ question['question'] }}</td>
+      <td >{{ question['subtext']}}</td>
+      <td>
+        <ul>
+          {% for symptom in question['symptomOf'] %}
+        <li> {{symptom}} </li>
+          {% endfor %}
+        </ul>
+      </td>
         <td>      <div class="col-6">
-          <img src="../static/img/spot.jpg" class="img-fluid" >
+          <img src="{{ url_for('static', filename='img/') }}{{ question['refImg']}}" class="img-fluid" >
           </div></td>
-        <td><button type="button" class="btn btn-outline-danger ml-auto" style="margin-right: 1rem;">Delete</button>
-                                <button type="button" class="btn btn-outline-info ml-auto" style="margin-right: 1rem;">Edit</button></td>
+        <td>
+           <button class="btn btn-outline-danger ml-auto" style="margin-right: 1rem;" type="submit">Delete</button>
+        <button type="button" class="btn btn-outline-info ml-auto" style="margin-right: 1rem;">Edit</button>
+
+      </td>
     </tr>
+  </form>
+{% endfor %}
 
   </tbody>
+
 </table>
               </div>
             </div>

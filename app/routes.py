@@ -16,6 +16,7 @@ CONNECTION_STRING = "mongodb+srv://dima:berryjuice09@hope-db-nqwaw.mongodb.net/t
 client = pymongo.MongoClient(CONNECTION_STRING)
 db = client.get_database('hope-db')
 
+
 class addForm(FlaskForm):
     question = StringField('Question', validators=[InputRequired()])
     subtext = TextAreaField('Subtext', validators=[InputRequired()])
@@ -98,7 +99,7 @@ def addquestion():
         resp = requests.post(url, json = newQuestion)
         flash('Successfully added question to database')
     
-    return render_template('addquestion.html', pageType = pageType, form=form)
+    return render_template('addquestion.html', pageType = pageType, form=form, loggedEmail = session['admin'])
 
 
 @app.route('/updatequestions')
@@ -106,10 +107,28 @@ def editquestion():
     pageType = 'editquestion'
     return render_template('editquestion.html', pageType = pageType)
 
-@app.route('/questions')
-def questions():
+@app.route('/questions', methods=['GET'])
+@app.route('/questions/<action>/<question>', methods=['GET', 'POST'])
+def questions(action=None, question=None):
     pageType = 'questions'
-    return render_template('questions.html', pageType = pageType)
+    questions = db.questions
+    
+
+
+    if request.method == "POST":
+
+        if action == 'delete':
+            questionToDel = question
+            toDelete = { "question": questionToDel }
+            # Delete row
+            questions.delete_one(toDelete)
+
+            return redirect(url_for('questions'))
+
+    else:
+        r = requests.get('http://127.0.0.1:5000/getquestions').json()
+        readQuestions = r.get('result')
+        return render_template('questions.html', pageType = pageType, questions=readQuestions, loggedEmail = session['admin'])
 
 @app.route('/diagnosis')
 def diagnosis():
