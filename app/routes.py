@@ -1,10 +1,13 @@
-from flask import render_template
+from flask import Flask, render_template, url_for, request, session, redirect, flash
 from app import app
 from flask import Flask
 from flask import Flask, jsonify, request
 from flask_pymongo import pymongo
 from flask_restful import Resource, Api
 from flask_cors import CORS
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, TextAreaField, SubmitField, FileField, BooleanField
+from wtforms.validators import InputRequired
 import requests
 
 
@@ -13,34 +16,92 @@ CONNECTION_STRING = "mongodb+srv://dima:berryjuice09@hope-db-nqwaw.mongodb.net/t
 client = pymongo.MongoClient(CONNECTION_STRING)
 db = client.get_database('hope-db')
 
-class loginForm(FlaskForm):
+class addForm(FlaskForm):
+    question = StringField('Question', validators=[InputRequired()])
+    subtext = TextAreaField('Subtext', validators=[InputRequired()])
+    mcc = BooleanField('Merkel Cell Carcinoma')
+    scc = BooleanField('Squamous Cell Carcinoma')
+    bcc = BooleanField('Basal Cell Carcinoma')
+    mel = BooleanField('Melanoma')
+    imgFile = FileField('Upload a reference image so patients know what to look for (.jpg, .png, .jpeg)')
 
+class AssessForm(FlaskForm):
+    fullname = StringField('Full Name', validators=[InputRequired()])
+    govID = StringField('Government ID', validators=[InputRequired()])
+
+class LoginForm(FlaskForm):
+    email = StringField('E-mail', validators=[InputRequired()])
+    password = PasswordField('Password', validators=[InputRequired()])
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET','POST'])
 def index():
     pageType = 'index'
-    return render_template('index.html', pageType = pageType )
+
+    if request.method == 'POST':
+        session['userGovID'] = request.form['govID']
+        session['user'] = request.form['fullname']
+
+        return redirect(url_for('assessment'))
+
+    form = AssessForm()
+    return render_template('index.html', pageType = pageType, form=form)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET','POST'])
 def login():
+    form = LoginForm()
     pageType = 'login'
-    return render_template('login.html', pageType = pageType )
+
+    if request.method == 'POST':
+        admins = db.admins
+        login_user = admins.find_one({'email': request.form['email']})
+
+        if login_user:
+            if request.form['password'] == login_user['password']:
+                session['admin'] = request.form['email']
+                return redirect(url_for('dashboard'))
+            else:
+                flash('Incorrect email/password')
+                return redirect(url_for('login'))
+
+    return render_template('login.html', pageType = pageType, form=form)
+    
 
 @app.route('/dashboard')
 def dashboard():
     pageType = 'dashboard'
-    r = requests.get('http://127.0.0.1:5000/users/dima@gmail.com').json()
-    fullname = {'firstname': r.get('result').get('firstname'), 'lastname' : r.get('result').get('lastname')}
-    return render_template('dashboard.html', pageType = pageType)
+    if 'admin' in session:
+        return render_template('dashboard.html', pageType = pageType, loggedEmail = session['admin'])
+    return 'You are not logged in!'
 
-@app.route('/add')
+@app.route('/assessment', methods=['GET','POST'])
+def assessment():
+    pageType = 'assessment'
+    if 'user' in session:
+        return render_template('assessment.html', pageType = pageType, loggedUser = session['user'])
+    return 'You are not logged in!'
+
+
+@app.route('/addquestion', methods=['GET','POST'])
 def addquestion():
+    form = addForm()
     pageType = 'addquestion'
-    return render_template('addquestion.html', pageType = pageType)
+    url = 'http://127.0.0.1:5000/postquestions'
 
-@app.route('/update')
+    if request.method == 'POST':
+        questions = db.questions
+
+        newQuestion = {'question': request.form['question'], 'subtext': request.form['subtext'],
+                           'symptomOf': request.form.getlist('symptom'), 'refImg': request.form['imgFile']}
+
+        resp = requests.post(url, json = newQuestion)
+        flash('Successfully added question to database')
+    
+    return render_template('addquestion.html', pageType = pageType, form=form)
+
+
+@app.route('/updatequestions')
 def editquestion():
     pageType = 'editquestion'
     return render_template('editquestion.html', pageType = pageType)
@@ -55,10 +116,11 @@ def diagnosis():
     pageType = 'diagnosis'
     return render_template('diagnosis.html', pageType = pageType)
 
-@app.route('/assessment')
-def assessment():
-    pageType = 'assessment'
-    return render_template('assessment.html', pageType = pageType)
+@app.route('/logout')
+def logout():
+   # remove the username from the session if it is there
+   session.pop('admin', None)
+   return redirect(url_for('login'))
 
 #==== API CODE ====
 @app.route('/admins/<email>', methods=['GET'])

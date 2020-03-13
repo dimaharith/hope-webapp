@@ -1,3 +1,4 @@
+{% from "_render_field.html" import render_field, render_radio_fields, render_checkbox %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,10 +58,11 @@
       
           <div class="form-inline ml-auto my-2 my-lg-0">
      <span style="margin-right: 10px; color: #409bac">Are you a specialist? </span> 
-      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Login here</button>
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit" onclick="location.href = '{{ url_for('login')}}';">Login here</button>
     </div>
  {% else %}
-      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Log out</button>
+    <span style="margin-right: 10px; color: #409bac">{{ loggedEmail }} </span> 
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit" onclick="location.href = '{{ url_for('logout')}}';">Log out</button>
   {% endif %}
   </div>
 </nav>

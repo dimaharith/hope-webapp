@@ -29,27 +29,17 @@
     <h5 class="card-title">Start my assessment</h5>
     <h6 class="card-subtitle mb-2 text-muted"></h6>
     <p class="card-text" style="line-height: 20px; ">Entering your name and government ID allows us to monitor your case if you choose to visit our out-patient clinic</p>
-      <form class="form-example" action="" method="post">
+      <form class="form-example" method="POST" action="{{ url_for('index')}}">
                 <!-- Input fields -->
-                <div class="form-group">
-                    <label for="username"> Full name </label>
-                    <input class="form-control" type="text" placeholder="Jane Doe">
-                </div>
-                <div class="form-group">
-                    <label for="password">Government ID </label>
-                     <input class="form-control" type="text" placeholder="XXXXXXXXX">
-                </div>    
+                {{ form.csrf_token }}
+                {{ render_field(form.fullname, placeholder=form.fullname.label.text)}}
+                {{ render_field(form.govID, placeholder='XXXXXXXXX')}}    
                <div class="col text-center">
-                 <button type="submit" class="btn btn-info btn-default">Login</button>
-        
-                </div>
-                
-              <!--<button type="submit" class="btn btn-info btn-default">Add patient</button>-->
-             
+                 <button type="submit" class="btn btn-info btn-default">Start Assessment</button>
+                </div>        
             </form>
               </div>
-            </div>
-        
+            </div>     
 </div>
     </div>
   </div>
