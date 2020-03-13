@@ -95,6 +95,11 @@ def addquestion():
         symptomList = len(request.form.getlist('symptom'))
         if symptomList == 0:
             flash(u'You must select at least one disease', 'error')
+        elif symptomList == 4:
+            newQuestion = {'question': request.form['question'], 'subtext': request.form['subtext'],
+                               'symptomOf': ['General'], 'refImg': request.form['imgFile']}
+            resp = requests.post(url, json = newQuestion)
+            flash(u'Successfully added question to database', 'success')
         else:
             newQuestion = {'question': request.form['question'], 'subtext': request.form['subtext'],
                                'symptomOf': request.form.getlist('symptom'), 'refImg': request.form['imgFile']}
