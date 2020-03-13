@@ -31,6 +31,7 @@
 
 </script>
 
+
 </head>
 
 <body>
@@ -46,7 +47,11 @@
    
      <ul class="navbar-nav mr-auto mt-2 mt-lg-0" style="margin-left: 10rem;">
       <li class="nav-item active">
+        {% if (pageType == 'questions' or pageType == 'dashboard' or pageType == 'addquestion') %}
+        <a class="nav-link" href="/dashboard"> Dashboard <span class="sr-only">(current)</span></a>
+        {% else %}
         <a class="nav-link" href="/index"> Home <span class="sr-only">(current)</span></a>
+        {% endif %}
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">About</a>
@@ -71,7 +76,18 @@
 </body>
 {% block body%}
 {% endblock %}
+    <script type="text/javascript">
 
+$(document).ready(function () {
+ 
+window.setTimeout(function() {
+    $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+        $(this).remove(); 
+    });
+}, 5000);
+ 
+});
+</script>
     <script src="{{ url_for('static', filename='vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 </html>

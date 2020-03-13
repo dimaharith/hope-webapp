@@ -13,14 +13,38 @@
 <div class="card border-light mb-3 shadow-lg" style="width: 60rem;">
   <div class="card-header">Add a New Question</div>
   <div class="card-body">
-    {%  for message in get_flashed_messages() %}
-            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 1rem; font-size: 15px; text-align: center;">
-            {{message}}
+    {% with errors = get_flashed_messages(category_filter=["error"]) %}
+  {% if errors %}
+
+ 
+    {%- for msg in errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 1rem; font-size: 15px; text-align: center;">
+            {{msg}}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
-{% endfor %}
+    {% endfor -%}
+ 
+
+{% endif %}
+{% endwith %}
+    {% with success = get_flashed_messages(category_filter=["success"]) %}
+  {% if success %}
+
+ 
+    {%- for msg in success %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 1rem; font-size: 15px; text-align: center;">
+            {{msg}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+    {% endfor -%}
+ 
+
+{% endif %}
+{% endwith %}
        <form class="form-example" method="POST" action="{{ url_for('addquestion')}}">
                 {{ form.csrf_token }}
                 {{ render_field(form.question, placeholder='Is the color of the spot not the same all over?')}}
@@ -33,11 +57,10 @@
                   {{ render_checkbox(form.bcc)}}
                   {{ render_checkbox(form.mcc)}}
                 </div>
-              
                 {{ render_field(form.imgFile)}}
 
                      <div class="d-flex justify-content-end">
-              <button class="btn btn-outline-info" type="reset" style="margin: 5px;" onclick="location.href = '{{ url_for('dashboard')}}';"> Cancel
+              <button class="btn btn-outline-info" type="reset" style="margin: 5px;" onclick="location.href = '{{ url_for('questions')}}';"> Cancel
         </button>
    <button class="btn btn-info" type="submit" style="margin: 5px;"> Add Question
         </button>

@@ -7,7 +7,7 @@ from flask_restful import Resource, Api
 from flask_cors import CORS
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, TextAreaField, SubmitField, FileField, BooleanField
-from wtforms.validators import InputRequired
+from wtforms.validators import InputRequired, NumberRange, DataRequired
 import requests
 
 
@@ -15,7 +15,6 @@ app.config['JSON_SORT_KEYS'] = False
 CONNECTION_STRING = "mongodb+srv://dima:berryjuice09@hope-db-nqwaw.mongodb.net/test?retryWrites=true&w=majority"
 client = pymongo.MongoClient(CONNECTION_STRING)
 db = client.get_database('hope-db')
-
 
 class addForm(FlaskForm):
     question = StringField('Question', validators=[InputRequired()])
@@ -40,6 +39,7 @@ def index():
     pageType = 'index'
 
     if request.method == 'POST':
+        #if not(request.form['govID'].isnumeric()):  
         session['userGovID'] = request.form['govID']
         session['user'] = request.form['fullname']
 
@@ -92,12 +92,15 @@ def addquestion():
 
     if request.method == 'POST':
         questions = db.questions
+        symptomList = len(request.form.getlist('symptom'))
+        if symptomList == 0:
+            flash(u'You must select at least one disease', 'error')
+        else:
+            newQuestion = {'question': request.form['question'], 'subtext': request.form['subtext'],
+                               'symptomOf': request.form.getlist('symptom'), 'refImg': request.form['imgFile']}
 
-        newQuestion = {'question': request.form['question'], 'subtext': request.form['subtext'],
-                           'symptomOf': request.form.getlist('symptom'), 'refImg': request.form['imgFile']}
-
-        resp = requests.post(url, json = newQuestion)
-        flash('Successfully added question to database')
+            resp = requests.post(url, json = newQuestion)
+            flash(u'Successfully added question to database', 'success')
     
     return render_template('addquestion.html', pageType = pageType, form=form, loggedEmail = session['admin'])
 
@@ -113,15 +116,18 @@ def questions(action=None, question=None):
     pageType = 'questions'
     questions = db.questions
     
-
-
     if request.method == "POST":
 
         if action == 'delete':
             questionToDel = question
             toDelete = { "question": questionToDel }
             # Delete row
-            questions.delete_one(toDelete)
+            delResult = questions.delete_one(toDelete)
+
+            if delResult.deleted_count != 0:
+                flash('Question deleted successfully')
+            else:
+                flash('Oops, something went wrong. Please try again.')
 
             return redirect(url_for('questions'))
 
@@ -219,16 +225,6 @@ def add_question():
 
     return jsonify({'result': output})
 
-#DELETE a question
-@app.route('/deletequestions', methods=['DELETE'])
-def delete_question():
-    questions = db.questions
-    question = request.json['question']
-    toDelete = { "question": question }
-
-    questions.delete_one(toDelete) 
-
-    return jsonify({'result': 'success'})
 
 #PUT/UPDATE a question
 @app.route('/updatequestions', methods=['PUT'])

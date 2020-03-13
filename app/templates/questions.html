@@ -38,6 +38,14 @@
               <div class="card" style="width: 90%; ">
   <div class="card-body">
     <h5 class="card-title">Questions</h5>
+                {%  for message in get_flashed_messages() %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert" style="margin-top: 1rem; font-size: 15px; text-align: center;">
+            {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
  <table class="table" style="table-layout: fixed;  vertical-align: middle !important; ">
   <thead class="thead-light">
     <tr>
@@ -63,9 +71,15 @@
           {% endfor %}
         </ul>
       </td>
-        <td>      <div class="col-6">
+        <td> 
+          {% if question['refImg'] == "" %}
+           No reference image provided
+           {% else %}
+          <div class="col-6">
           <img src="{{ url_for('static', filename='img/') }}{{ question['refImg']}}" class="img-fluid" >
-          </div></td>
+          </div>
+          {% endif %}
+        </td>
         <td>
            <button class="btn btn-outline-danger ml-auto" style="margin-right: 1rem;" type="submit">Delete</button>
         <button type="button" class="btn btn-outline-info ml-auto" style="margin-right: 1rem;">Edit</button>
